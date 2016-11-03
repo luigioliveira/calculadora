@@ -13,7 +13,7 @@
    
     <target name="jar">
     <mkdir dir="build/jar"/>
-    <jar destfile="test/aplicativo.jar" basedir="test/">
+    <jar destfile="build/jar/aplicativo.jar" basedir="build/jar">
         <manifest>
             <attribute name="Main-Class" value="src/calculadoraswing/"/>
         </manifest>
