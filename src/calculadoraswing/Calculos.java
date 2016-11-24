@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Robson Fernando Gomes
  */
-public class Calculos {
+public class {
 
     public static void main(String args[])
     {
