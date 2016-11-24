@@ -1,23 +1,30 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- You may freely edit this file. See commented blocks below for -->
-<!-- some examples of how to customize the build. -->
-<!-- (If you delete it and reopen the project it will be recreated.) -->
-<!-- By default, only the Clean and Build commands use this build script. -->
-<!-- Commands such as Run, Debug, and Test only use this build script if -->
-<!-- the Compile on Save feature is turned off for the project. -->
-<!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
-<!-- in the project's Project Properties dialog box.-->
-<project name="CalculadoraSwing" default="default" basedir=".">
-    <description>Builds, tests, and runs the project CalculadoraSwing.</description>
-    <import file="nbproject/build-impl.xml"/>
-   
-    <target name="jar">
-    <mkdir dir="build/jar"/>
-    <jar destfile="build/jar/aplicativo.jar" basedir="build/jar">
-        <manifest>
-            <attribute name="Main-Class" value="src/calculadoraswing/"/>
-        </manifest>
-    </jar>
-</target>
-    
+<project name="Projecto de exemplo para build no jenkins">
+	
+	<path id="tests.classpath" path=".">
+	
+		<pathelement path="target/classes/" />
+	</path>
+	
+	<target name="compile">
+		<mkdir dir="target/classes/"/>
+		<mkdir dir="target/classes-test/"/>
+		<javac destdir="target/classes/" srcdir="src/calculadoraswing/" debug="true" encoding="UTF-8" />
+		<javac destdir="target/classes-test/" srcdir="src/calculadoraswing/" classpathref="tests.classpath" debug="true" encoding="UTF-8" />
+	</target>
+	
+	<target name="test" depends="compile">
+		<junit fork="yes" forkmode="once"  printsummary="true" showoutput="true" failureproperty="failed-test" haltonfailure="true" >
+			<formatter type="plain" usefile="false" />
+			<classpath location="target/classes-test/" />
+			<classpath refid="tests.classpath" />
+			<batchtest fork="yes" todir="${artifacts.dir}/reports">
+				<fileset dir="target/classes-test/" >
+					<include name="**/*Test.class" />
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+	<target name="jar" depends="test">
+		<jar destfile="target/jenkins-exemplo.jar" basedir="target/classes/" />
+	</target>
 </project>
