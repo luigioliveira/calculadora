@@ -18,7 +18,19 @@ public class Calculos {
         Calculos c=new Calculos();
         System.out.println(">>>>"+c.calculadora("5/5"));
     }
-    
+    public String calculadora(String expressao) {
+        String resultado;
+        List<Double> listaNumeros = new ArrayList<Double>();
+        List<Character> listaOperadores = new ArrayList<Character>();
+
+        listaNumeros = obterNumeros(expressao);
+        listaOperadores = obterOperadores(expressao);
+
+        resultado = calcularValor(listaNumeros, listaOperadores);
+
+        return resultado;
+
+    }
 
     private String calcularValor(List<Double> listaNumeros, List<Character> listaOperadores) {
         String resultado = "";
